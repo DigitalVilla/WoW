@@ -1,0 +1,116 @@
+$board-width:450px;
+
+.App {
+  height: 100vh;
+  text-align: center;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.Hangman {
+  width: 100%;
+  padding: $space;
+  max-width: 900px;
+  // max-height: 700px;
+  height: 100vh;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-image: linear-gradient(rgb(0, 131, 102), rgb(9, 87, 63));
+
+  .stats {
+    // border: 1px solid #00f;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .title {
+      font-size: 3rem;
+      margin: 0;
+
+    }
+
+    .lives {
+      svg {
+        fill: #fff;
+        margin-right: 1rem;
+        width: 1.6rem;
+        height: 1.6rem;
+      }
+    }
+  }
+
+
+  &-board {
+    flex: 1;
+    .Hangman-word {
+      // border: 1px solid #00f;
+      color: #fff;
+      text-shadow: 0 0 .3rem rgba(0, 0, 0, 0.2), 0 .4rem .5rem rgba(0, 0, 0, 0.2);
+      font-size: 3rem;
+      font-weight: 400;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      span {
+        border-bottom: 2px solid rgb(255, 255, 255);
+        box-shadow: 0 2px rgba($color: #000000, $alpha: .2);
+        height: 45px;
+        width: 32px;
+        content: "";
+        display: inline-block;
+        margin-right: 1rem;
+      }
+
+      span:nth-child(1) {
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  &-btns {
+    // border: 1px solid #00f;
+    display: inline-block;
+    max-width: 600px;
+    width: 100%;
+    margin-top: 0;
+
+    button {
+      border: none;
+      font-family: inherit;
+      font-size: 1.6rem;
+      cursor: pointer;
+      width: 35px;
+      height: 30px;
+      margin: $space-sm;
+      letter-spacing: 1px;
+      outline: none;
+      background: #b5b3bd;
+      color: #ffffff;
+      box-shadow: 0 6px #5b6874;
+      border-radius: 5px;
+      padding-top: 4px;
+    }
+
+
+    button:hover {
+      background-color: #95b0c0;
+      ;
+    }
+
+    button:disabled {
+      transform: translateY(4px);
+      background: #6eaacc;
+      color: #fff;
+      box-shadow: 0 3px #5b6874;
+    }
+  }
+}
