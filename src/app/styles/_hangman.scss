@@ -1,4 +1,7 @@
 $board-width:450px;
+$color1 : #ff314c;
+$color2 : #FF3366;
+$color3 : #BA265D;
 
 .App {
   height: 100vh;
@@ -12,8 +15,8 @@ $board-width:450px;
 
 .Hangman {
   width: 100%;
-  padding: $space;
-  max-width: 900px;
+  padding: $space-md;
+  // max-width: 900px;
   // max-height: 700px;
   height: 100vh;
   color: black;
@@ -21,7 +24,8 @@ $board-width:450px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-image: linear-gradient(rgb(0, 131, 102), rgb(9, 87, 63));
+  // background-image: linear-gradient(rgb(0, 131, 102), rgb(9, 87, 63));
+  background-image: linear-gradient(to bottom, #2d2e30, #252527);
 
   .stats {
     // border: 1px solid #00f;
@@ -30,48 +34,92 @@ $board-width:450px;
     align-items: center;
     justify-content: space-between;
 
-    .title {
-      font-size: 3rem;
-      margin: 0;
-
+    .main-logo {
+      height: 3rem;
     }
 
     .lives {
       svg {
-        fill: #fff;
-        margin-right: 1rem;
+        fill: $color2;
+        margin-right: .5rem;
         width: 1.6rem;
         height: 1.6rem;
+      }
+
+      .empty {
+        fill: rgb(194, 194, 194);
+      }
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      .main-logo {
+        height: 4rem;
+      }
+
+      .lives {
+        svg {
+          margin-right: 1rem;
+          width: 2.5rem;
+          height: 2.5rem;
+        }
       }
     }
   }
 
 
   &-board {
-    flex: 1;
-    .Hangman-word {
-      // border: 1px solid #00f;
+    padding-left: $space-md;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    align-items: center;
+
+    .word {
+      height: 45px;
       color: #fff;
-      text-shadow: 0 0 .3rem rgba(0, 0, 0, 0.2), 0 .4rem .5rem rgba(0, 0, 0, 0.2);
+      text-shadow: 0 0 .3rem rgba(0, 0, 0, 0.2),
+        0 .4rem .5rem rgba(0, 0, 0, 0.2);
       font-size: 3rem;
       font-weight: 400;
-      height: 100%;
+      // border: 1px solid #00f;
+
       display: flex;
       justify-content: center;
       align-items: center;
 
+
       span {
-        border-bottom: 2px solid rgb(255, 255, 255);
-        box-shadow: 0 2px rgba($color: #000000, $alpha: .2);
-        height: 45px;
+        border-bottom: 2px solid $color3;
+        height: 100%;
+        max-height: 50px;
         width: 32px;
         content: "";
         display: inline-block;
+      }
+
+      span:not(:last-child) {
         margin-right: 1rem;
       }
 
-      span:nth-child(1) {
-        text-transform: uppercase;
+      @media screen and (min-width: $screen-sm) {
+        height: 55px;
+        font-size: 3.5rem;
+
+        span {
+          width: 36px;
+        }
+      }
+    }
+
+    .word:not(:last-child) {
+      margin-right: 3rem;
+    }
+
+    @media screen and (min-width: $screen-sm) {
+      justify-content: center;
+
+      .word:not(:last-child) {
+        margin-right: 4rem;
       }
     }
   }
@@ -81,7 +129,7 @@ $board-width:450px;
     display: inline-block;
     max-width: 600px;
     width: 100%;
-    margin-top: 0;
+    margin: 0;
 
     button {
       border: none;
@@ -93,24 +141,41 @@ $board-width:450px;
       margin: $space-sm;
       letter-spacing: 1px;
       outline: none;
-      background: #b5b3bd;
+      background: $color1;
+      background-image: linear-gradient(to top, #686164, #3d3d41);
       color: #ffffff;
-      box-shadow: 0 6px #5b6874;
+      box-shadow: 0 6px rgb(165, 35, 83);
       border-radius: 5px;
       padding-top: 4px;
+
+      @media screen and (min-width: $screen-xs) {
+        width: 40px;
+        height: 35px;
+      }
+
+      @media screen and (min-width: $screen-sm) {
+        font-size: 1.8rem;
+        width: 60px;
+        height: 50px;
+      }
+
     }
 
 
     button:hover {
-      background-color: #95b0c0;
-      ;
+      background-color: $color1;
     }
 
     button:disabled {
       transform: translateY(4px);
-      background: #6eaacc;
+      background: $color1;
+      background-image: linear-gradient(to top, #5e2d35, #FF3366);
       color: #fff;
-      box-shadow: 0 3px #5b6874;
+      box-shadow: 0 3px #BA265D;
+    }
+
+    @media screen and (min-width: $screen-xs) {
+      margin: 0 auto $space-lg;
     }
   }
 }

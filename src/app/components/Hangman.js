@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { SVG } from "../img/icons";
+import Logo from "../img/icon.png";
 
 
 class Hangman extends Component {
@@ -13,7 +14,7 @@ class Hangman extends Component {
     this.state = {
       lives: Array.from({ length: this.props.maxLives }),
       guessed: new Set(),
-      answer: "apples",
+      answer: "Apples are red roses are blue",
       left: this.props.maxLives
     };
     this.handleGuess = this.handleGuess.bind(this);
@@ -24,8 +25,15 @@ class Hangman extends Component {
   */
   guessedWord() {
     return this.state.answer
-      .split("")
-      .map(ltr => (<span>{this.state.guessed.has(ltr) ? ltr : ''}</span>));
+      .split(" ")
+      .map((word,i) => {
+        return <span className ="word" key={'word-' + i}>
+          {
+            word.split("")
+              .map((ltr, i) => (<span key={'ltr-' + i}> {this.state.guessed.has(ltr.toLowerCase()) ? ltr : ''} </span>))
+          }
+        </span>
+      });
   }
 
   /** handleGuest: handle a guessed letter:
@@ -36,14 +44,14 @@ class Hangman extends Component {
     let ltr = evt.target.value;
     this.setState(ps => ({
       guessed: ps.guessed.add(ltr),
-      left: ps.left - (ps.answer.includes(ltr) ? 0 : 1)
+      left: ps.left - (ps.answer.toLowerCase().includes(ltr) ? 0 : 1)
     }));
   }
 
   /** generateButtons: return array of letter buttons to render */
   generateButtons() {
-    return "abcdefghijklmnopqrstuvwxyz".split("").map(ltr => (
-      <button
+    return "abcdefghijklmnopqrstuvwxyz".split("").map((ltr,i) => (
+      <button key={'letterBtn-'+i}
         value={ltr}
         onClick={this.handleGuess}
         disabled={this.state.guessed.has(ltr)}
@@ -58,21 +66,20 @@ class Hangman extends Component {
     return (
       <div className='Hangman'>
         <div className="stats">
-          <span className="title">GW</span>
+          <img className="main-logo" src={Logo} alt="" />
           <span className="lives">
             {
               this.state.lives.map((l, i) => {
                 let icon = i < this.state.left ? "heartFull" : "heart";
-                return <SVG key={"lives" + i} icon={icon}/>
+                let iClass = icon === "heart" ? "empty" : '';
+                return <SVG className={iClass} key={"lives" + i} icon={icon} />
               })
             }
           </span>
         </div>
 
         {/* <img src={this.props.images[this.state.nWrong]} /> */}
-        <div className='Hangman-board'>
-          <p className='Hangman-word'>{this.guessedWord()}</p>
-        </div>
+        <div className='Hangman-board'> {this.guessedWord()} </div>
         <p className='Hangman-btns'>{this.generateButtons()}</p>
       </div>
     );
