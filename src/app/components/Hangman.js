@@ -6,16 +6,18 @@ import Logo from "../img/icon.png";
 class Hangman extends Component {
   /** by default, allow 6 guesses and use provided gallows images. */
   static defaultProps = {
-    maxLives: 5
+    lives: 3
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      lives: Array.from({ length: this.props.maxLives }),
+      lives: Array.from({ length: this.props.lives }),
       guessed: new Set(),
+      // answer: "Apples are red roses are blue",
       answer: "Apples are red roses are blue",
-      left: this.props.maxLives
+      livesLeft: this.props.lives,
+      gameOver: false
     };
     this.handleGuess = this.handleGuess.bind(this);
   }
@@ -24,13 +26,14 @@ class Hangman extends Component {
     if guessed letters are {a,p,e}, show "app_e" for "apple"
   */
   guessedWord() {
-    return this.state.answer
+    const { gameOver, answer, guessed } = this.state;
+    return answer
       .split(" ")
-      .map((word,i) => {
-        return <span className ="word" key={'word-' + i}>
+      .map((word, i) => {
+        return <span className="word" key={'word-' + i}>
           {
             word.split("")
-              .map((ltr, i) => (<span key={'ltr-' + i}> {this.state.guessed.has(ltr.toLowerCase()) ? ltr : ''} </span>))
+              .map((ltr, i) => (<span key={'ltr-' + i}> {gameOver || guessed.has(ltr.toLowerCase()) ? ltr : ''} </span>))
           }
         </span>
       });
@@ -42,19 +45,24 @@ class Hangman extends Component {
   */
   handleGuess(evt) {
     let ltr = evt.target.value;
-    this.setState(ps => ({
-      guessed: ps.guessed.add(ltr),
-      left: ps.left - (ps.answer.toLowerCase().includes(ltr) ? 0 : 1)
-    }));
+    this.setState(ps => {
+     let livesLeft = ps.livesLeft - (ps.answer.toLowerCase().includes(ltr) ? 0 : 1)
+      return {
+        guessed: ps.guessed.add(ltr),
+        gameOver: livesLeft === 0,
+        livesLeft
+      }
+    });
   }
 
   /** generateButtons: return array of letter buttons to render */
   generateButtons() {
-    return "abcdefghijklmnopqrstuvwxyz".split("").map((ltr,i) => (
-      <button key={'letterBtn-'+i}
+    const { gameOver, guessed } = this.state;
+    return "abcdefghijklmnopqrstuvwxyz".split("").map((ltr, i) => (
+      <button key={'letterBtn-' + i}
         value={ltr}
         onClick={this.handleGuess}
-        disabled={this.state.guessed.has(ltr)}
+        disabled={!gameOver && guessed.has(ltr)}
       >
         {ltr}
       </button>
@@ -63,14 +71,15 @@ class Hangman extends Component {
 
   /** render: render game */
   render() {
+    const { gameOver, livesLeft, lives } = this.state;
     return (
       <div className='Hangman'>
         <div className="stats">
           <img className="main-logo" src={Logo} alt="" />
           <span className="lives">
             {
-              this.state.lives.map((l, i) => {
-                let icon = i < this.state.left ? "heartFull" : "heart";
+              lives.map((l, i) => {
+                let icon = i < livesLeft ? "heartFull" : "heart";
                 let iClass = icon === "heart" ? "empty" : '';
                 return <SVG className={iClass} key={"lives" + i} icon={icon} />
               })
@@ -80,6 +89,13 @@ class Hangman extends Component {
 
         {/* <img src={this.props.images[this.state.nWrong]} /> */}
         <div className='Hangman-board'> {this.guessedWord()} </div>
+        {gameOver &&
+          <div className="game-over">
+            <h2 className="title">
+              Game Over
+          </h2>
+          </div>
+        }
         <p className='Hangman-btns'>{this.generateButtons()}</p>
       </div>
     );
