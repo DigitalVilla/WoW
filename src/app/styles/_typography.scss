@@ -13,25 +13,12 @@ body {
 }
 
 @mixin title {
-  font-size: 6.5rem;
   color: #fff;
   text-shadow: 0 0 .3rem rgba(0, 0, 0, 0.3), 0 .4rem .65rem rgba(0, 0, 0, 0.33);
   font-style: normal;
   font-stretch: normal;
-  margin-bottom: 1.5rem;
   font-weight: bold;
-  text-transform: capitalize;
   text-align: center;
-  transition: all .2s;
-
-  @include media (iniPad) {
-    font-size: 4rem !important;
-    line-height: 1.2;
-  }
-
-  @include media (inPhone) {
-    font-size: 3.5rem !important;
-  }
 }
 
 .title {

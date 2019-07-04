@@ -13,7 +13,7 @@ $color3 : #BA265D;
   justify-content: center;
 }
 
-.Hangman {
+.wow {
   width: 100%;
   padding: $space-md;
   // max-width: 900px;
@@ -24,10 +24,9 @@ $color3 : #BA265D;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  // background-image: linear-gradient(rgb(0, 131, 102), rgb(9, 87, 63));
-  background-image: linear-gradient(to bottom, #2d2e30, #252527);
+  background-image: linear-gradient(to bottom, #2d2e30, #141314);
 
-  .stats {
+  &-header {
     // border: 1px solid #00f;
     width: 100%;
     display: flex;
@@ -49,6 +48,18 @@ $color3 : #BA265D;
       .empty {
         fill: rgb(194, 194, 194);
       }
+
+      &-text {
+        font-size: 2rem;
+        color: #fff;
+        letter-spacing: 5px;
+        font-weight: 400;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+      }
+
+
     }
 
     @media screen and (min-width: $screen-sm) {
@@ -73,20 +84,17 @@ $color3 : #BA265D;
     flex-wrap: wrap;
     justify-content: left;
     align-items: center;
+    max-width: 900px;
 
     .word {
       height: 45px;
       color: #fff;
-      text-shadow: 0 0 .3rem rgba(0, 0, 0, 0.2),
-        0 .4rem .5rem rgba(0, 0, 0, 0.2);
       font-size: 3rem;
       font-weight: 400;
-      // border: 1px solid #00f;
 
       display: flex;
       justify-content: center;
       align-items: center;
-
 
       span {
         border-bottom: 2px solid $color3;
@@ -102,7 +110,7 @@ $color3 : #BA265D;
       }
 
       @media screen and (min-width: $screen-sm) {
-        height: 55px;
+        height: 50px;
         font-size: 3.5rem;
 
         span {
@@ -124,7 +132,7 @@ $color3 : #BA265D;
     }
   }
 
-  &-btns {
+  &-alphaKeys {
     // border: 1px solid #00f;
     display: inline-block;
     max-width: 700px;
@@ -140,16 +148,16 @@ $color3 : #BA265D;
       height: 30px;
       margin: $space-sm;
       letter-spacing: 1px;
-      outline: none;
 
       background-image: linear-gradient(to top, #7a7577, #504b4f);
       color: #ffffff;
-      box-shadow: 0 4px #BA265D;
+      box-shadow: 0 4px $color3;
       border-radius: 4px;
       padding-top: 4px;
 
       &:hover {
-        background-color: $color1;
+        transform: translateY(1px);
+        box-shadow: 0 3px $color3;
       }
 
       &:disabled {
@@ -157,7 +165,7 @@ $color3 : #BA265D;
         background-image: linear-gradient(to top, #612b34, #FF3366);
 
         color: #fff;
-        box-shadow: 0 2px #BA265D;
+        box-shadow: 0 2px $color3;
       }
 
       @media screen and (min-width: $screen-xs) {
@@ -173,29 +181,52 @@ $color3 : #BA265D;
     }
 
     @media screen and (min-width: $screen-xs) {
-      margin: 0 auto 5vh;
+      margin: 0 auto 4vh;
     }
   }
 
-  .game-over {
-    border: 1px solid #00f;
-
+  &-menu {
     position: absolute;
     height: 100%;
     width: 100%;
     top: 0;
     left: 0;
-    background-image: linear-gradient(to bottom, #4e232a6b, rgba(255, 51, 102, 0.185));
-
+    background-image: linear-gradient(to top, rgba(77, 34, 41, 0.404), rgba(92, 19, 37, 0.404));
+    z-index: 10;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: $space-xxl 0 $space-lg ;
 
-    h2 {
+    span {
+      font-size: 2.5rem;
+
+      color: #fff;
+      letter-spacing: 5px;
       font-weight: 400;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      margin-bottom: $space-xl;
+
+      svg {
+        fill: #fff;
+        margin-right: 5px;
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+
+    button {
+      background: transparent;
+      color: #fff;
+        white-space: nowrap;
       font-size: 3rem;
-      padding: $space-sm $space-md;
-      border-bottom: 1px solid #fff;
+      border: 2px solid #fff;
+      border-radius: 4px;
+      padding: 0 $space-md $space-sm;
+      cursor: pointer;
     }
   }
 }

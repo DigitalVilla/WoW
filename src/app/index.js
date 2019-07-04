@@ -1,12 +1,12 @@
 import React, { Component } from "../../node_modules/react";
 import "./styles/main.scss";
-import Hangman from "./components/Hangman";
+import Wow from "./components/Wow";
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Hangman />
+        <Wow />
       </div>
     );
   }
