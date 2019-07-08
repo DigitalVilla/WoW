@@ -6,9 +6,9 @@ export default function Header(props) {
   const {rounds, score, livesLeft} = props.state;
   return (
     <div className="wow-header">
-      <img className="main-logo" src={Logo} alt="DigitalVilla"/>
-      <span className="lives-text">Round: {rounds}</span>
-      <span className="lives-text">Score: {score}</span>
+      <img className="logo" src={Logo} alt="DigitalVilla"/>
+      <span className="text">Level: {rounds}</span>
+      <span className="text">Total: {score}</span>
       <span className="lives">
         {
           props.lives.map((l, i) => {

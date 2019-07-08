@@ -110,48 +110,48 @@
 @mixin media($breakpoint) {
   // Default  Breakpoints mobile first approach
 
-  @if $breakpoint==phone {
-    @media only screen and (min-width: $screen-xs) {
+  @if $breakpoint==xs {
+    @media only screen and (min-width: $screen-xs) and (min-height: $screen-xs) {
       @content
     }
 
     ;
   }
 
-  @if $breakpoint==phone_lg {
-    @media only screen and (min-width: $screen-sm) {
+  @if $breakpoint==sm {
+    @media only screen and (min-width: $screen-sm) and (min-height: $screen-sm) {
       @content
     }
 
     ;
   }
 
-  @if $breakpoint==tablet {
-    @media only screen and (min-width: $screen-md) {
+  @if $breakpoint==md {
+    @media only screen and (min-width: $screen-md) and (min-height: $screen-md) {
       @content
     }
 
     ;
   }
 
-  @if $breakpoint==tablet_lg {
-    @media only screen and (min-width: $screen-lg) {
+  @if $breakpoint==lg {
+    @media only screen and (min-width: $screen-lg) and (min-height: $screen-lg) {
       @content
     }
 
     ;
   }
 
-  @if $breakpoint==laptop {
-    @media only screen and (min-width: $screen-xl) {
+  @if $breakpoint==xl {
+    @media only screen and (min-width: $screen-xl) and (min-height: $screen-xl) {
       @content
     }
 
     ;
   }
 
-  @if $breakpoint==laptop_lg {
-    @media only screen and (min-width: $screen-xxl) {
+  @if $breakpoint==xxl {
+    @media only screen and (min-width: $screen-xxl) and (min-height: $screen-xxl) {
       @content
     }
 
@@ -209,7 +209,7 @@
     ;
   }
 
- //==== Breakpoints exclusive approach ======
+  //==== Breakpoints exclusive approach ======
 
   @if $breakpoint==onlyTablet {
     @media only screen and (min-width: $screen-sm) and (max-width: $screen-md) {
@@ -230,7 +230,7 @@
 
   //specific px size
   @else {
-    @media only screen and (max-width: $breakpoint) {
+    @media only screen and (min-width: $breakpoint) and (min-height: $breakpoint){
       @content
     }
 

@@ -13,7 +13,6 @@ class WOW extends Component {
     super(props);
     this.init = this.init.bind(this);
     this.handleGuess = this.handleGuess.bind(this);
-    this.winCondition = this.winCondition.bind(this);
     this.handleMenuButton = this.handleMenuButton.bind(this);
   }
 
@@ -21,22 +20,19 @@ class WOW extends Component {
     this.init();
   }
 
-  init(lives, score, rounds) {
-    const liv = lives || this.props.lives
-    const random = quotes[~~(Math.random() * quotes.length)].quote;
-    // const random = quotes[0].quote;
-
-    this.answer = Array.from(new Set(random.split(" ").join("").toLowerCase())).sort().join('');
-    this.lives = Array.from({ length: liv });
+  init(lives = this.props.lives, score = 0, rounds = 1) {
+    const filteredQuotes = quotes.filter(quo => quo.length <= rounds * 30);
+    const randomQuote = filteredQuotes[~~(Math.random() * filteredQuotes.length)].quote;
+    this.answer = Array.from(new Set(randomQuote.split(" ").join("").toLowerCase())).sort().join('');
+    this.lives = Array.from({ length: lives });
+    this.quote = randomQuote;
     this.validGuess = '';
-    this.quote = random;
 
     this.setState({
-      livesLeft: liv,
       guessed: new Set(),
-      score: score || 0,
-      rounds: rounds || 1,
-      nextGame: false
+      livesLeft: lives,
+      rounds,
+      score,
     })
   }
 
@@ -64,18 +60,15 @@ class WOW extends Component {
   */
   handleGuess(e) {
     let ltr = e.target.value;
-    this.setState(ps => {
-      const livesLeft = ps.livesLeft - (this.quote.toLowerCase().includes(ltr) ? 0 : 1);
-      const guessed = ps.guessed.add(ltr);
-      return !this.winCondition(ltr) ? { livesLeft, guessed } :
-        { nextGame: true, score: ps.score += ps.livesLeft * 100, livesLeft, guessed }
-    })
+    if (this.answer.includes(ltr))
+      this.validGuess = (this.validGuess += ltr).split("").sort().join('');
 
-  }
+    this.setState(ps => ({
+      score: this.answer === this.validGuess ? ps.score + ps.livesLeft * 100 : ps.score,
+      livesLeft: ps.livesLeft - (this.quote.toLowerCase().includes(ltr) ? 0 : 1),
+      guessed: ps.guessed.add(ltr)
+    }))
 
-  winCondition(ltr) {
-    if (this.answer.includes(ltr)) this.validGuess += ltr
-    return this.answer === this.validGuess.split("").sort().join('');
   }
 
   /** generateButtons: return array of letter buttons to render */
@@ -85,8 +78,10 @@ class WOW extends Component {
         disabled={this.state.guessed.has(ltr)}> {ltr} </button>
     ));
   }
+
   handleMenuButton() {
-    if (this.state.nextGame) {
+    console.log("handleMenuButton");
+    if (this.answer === this.validGuess) {
       const { livesLeft, score, rounds } = this.state;
       this.init(livesLeft, score, rounds + 1);
     }
@@ -94,12 +89,28 @@ class WOW extends Component {
   }
 
   render() {
+    const { livesLeft, reset } = this.state;
     return (
       <div className='wow noSelect'>
-        <Header state={this.state} lives={this.lives} />
-        <Menu state={this.state} />
-        <div className='wow-board'> {this.guessedWord()} </div>
-        <p className='wow-alphaKeys'>{this.generateButtons()}</p>
+        <Header
+          state={this.state}
+          lives={this.lives} />
+        <Menu
+          reset={livesLeft === 0 || reset}
+          win={this.answer === this.validGuess}
+          buttonHandler={this.handleMenuButton} />
+
+        <div className='wow-board'>
+          <div className="quote">
+            {this.guessedWord()}
+          </div>
+        </div>
+
+        <div className='wow-keyboard'>
+          <div className="alphaKeys">
+            {this.generateButtons()}
+          </div>
+        </div>
       </div>
     );
   }
